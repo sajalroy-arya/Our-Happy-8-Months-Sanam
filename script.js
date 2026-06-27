@@ -11,6 +11,7 @@
 
   // ── Register GSAP Plugins ──────────────────────────────────────
   gsap.registerPlugin(ScrollTrigger, TextPlugin);
+  ScrollTrigger.config({ ignoreMobileResize: true });
   let audioEngine = null;
   let particleSystem = null;
   let animationRunning = false;
@@ -903,7 +904,7 @@
       scrollTrigger: {
         trigger: "#scene-1",
         start: "top top",
-        end: "+=300%",
+        end: isMobile ? "+=600%" : "+=300%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -967,7 +968,7 @@
       scrollTrigger: {
         trigger: "#scene-2",
         start: "top top",
-        end: "+=200%",
+        end: isMobile ? "+=400%" : "+=200%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1023,7 +1024,7 @@
       scrollTrigger: {
         trigger: "#scene-3",
         start: "top top",
-        end: "+=350%",
+        end: isMobile ? "+=700%" : "+=350%",
         pin: true,
         scrub: 1,
         onEnter: () => (currentScene = "scene-3"),
@@ -1093,7 +1094,7 @@
       scrollTrigger: {
         trigger: "#scene-4",
         start: "top top",
-        end: "+=350%",
+        end: isMobile ? "+=700%" : "+=350%",
         pin: true,
         scrub: 1,
         onEnter: () => (currentScene = "scene-4"),
@@ -1170,7 +1171,7 @@
       scrollTrigger: {
         trigger: "#scene-5",
         start: "top top",
-        end: "+=250%",
+        end: isMobile ? "+=500%" : "+=250%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1204,7 +1205,7 @@
       scrollTrigger: {
         trigger: "#scene-6",
         start: "top top",
-        end: "+=500%",
+        end: isMobile ? "+=1000%" : "+=500%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1295,7 +1296,7 @@
       scrollTrigger: {
         trigger: "#scene-whatif",
         start: "top top",
-        end: "+=300%",
+        end: isMobile ? "+=600%" : "+=300%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1355,7 +1356,7 @@
       scrollTrigger: {
         trigger: "#scene-7",
         start: "top top",
-        end: "+=300%",
+        end: isMobile ? "+=600%" : "+=300%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1466,7 +1467,7 @@
       scrollTrigger: {
         trigger: "#scene-8",
         start: "top top",
-        end: "+=500%",
+        end: isMobile ? "+=1000%" : "+=500%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1552,7 +1553,7 @@
       scrollTrigger: {
         trigger: "#scene-9",
         start: "top top",
-        end: "+=400%",
+        end: isMobile ? "+=800%" : "+=400%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1611,7 +1612,7 @@
       scrollTrigger: {
         trigger: "#scene-10",
         start: "top top",
-        end: "+=250%",
+        end: isMobile ? "+=500%" : "+=250%",
         pin: true,
         scrub: 1,
         onEnter: () => (currentScene = "scene-10"),
@@ -1666,7 +1667,7 @@
       scrollTrigger: {
         trigger: "#scene-11",
         start: "top top",
-        end: "+=200%",
+        end: isMobile ? "+=400%" : "+=200%",
         pin: true,
         scrub: 1,
         onEnter: () => (currentScene = "scene-11"),
@@ -1729,7 +1730,7 @@
       scrollTrigger: {
         trigger: "#scene-12",
         start: "top top",
-        end: "+=300%",
+        end: isMobile ? "+=600%" : "+=300%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -1773,7 +1774,7 @@
       scrollTrigger: {
         trigger: "#finale",
         start: "top top",
-        end: "+=150%",
+        end: isMobile ? "+=300%" : "+=150%",
         pin: true,
         scrub: 1,
         onEnter: () => {
@@ -2011,5 +2012,6 @@
   gsap.set(".final-text", { opacity: 0 });
   gsap.set(".infinity", { opacity: 0 });
 })();
+
 
 
