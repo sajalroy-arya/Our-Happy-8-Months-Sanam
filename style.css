@@ -212,14 +212,14 @@ body {
 .scene {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
 }
 
 .scene-content {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1334,7 +1334,7 @@ body {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1708,3 +1708,4 @@ body {
 .fade-in {
   animation: fadeInUp 0.8s var(--transition-smooth) forwards;
 }
+

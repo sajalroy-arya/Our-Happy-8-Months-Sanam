@@ -11,10 +11,6 @@
 
   // ── Register GSAP Plugins ──────────────────────────────────────
   gsap.registerPlugin(ScrollTrigger, TextPlugin);
-  ScrollTrigger.config({ ignoreMobileResize: true });
-  if (isMobile) {
-    ScrollTrigger.normalizeScroll(true);
-  }
   let audioEngine = null;
   let particleSystem = null;
   let animationRunning = false;
@@ -37,7 +33,12 @@
   // ================================================================
   // 1. LENIS SMOOTH SCROLL
   // ================================================================
-  const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+  const lenis = new Lenis({ 
+    lerp: 0.08, 
+    smoothWheel: true,
+    smoothTouch: true,
+    touchMultiplier: 1.5 
+  });
   lenis.on("scroll", ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -904,7 +905,7 @@
         start: "top top",
         end: "+=300%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-1";
           if (particleSystem) particleSystem.setMode("stars");
@@ -968,7 +969,7 @@
         start: "top top",
         end: "+=200%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-2";
           if (particleSystem) particleSystem.setMode("petals");
@@ -1024,7 +1025,7 @@
         start: "top top",
         end: "+=350%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => (currentScene = "scene-3"),
         onEnterBack: () => (currentScene = "scene-3"),
       },
@@ -1094,7 +1095,7 @@
         start: "top top",
         end: "+=350%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => (currentScene = "scene-4"),
         onEnterBack: () => (currentScene = "scene-4"),
       },
@@ -1171,7 +1172,7 @@
         start: "top top",
         end: "+=250%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-5";
           if (particleSystem) particleSystem.setMode("butterflies");
@@ -1205,7 +1206,7 @@
         start: "top top",
         end: "+=500%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-6";
           if (particleSystem) particleSystem.setMode("none");
@@ -1296,7 +1297,7 @@
         start: "top top",
         end: "+=300%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-whatif";
           if (particleSystem) particleSystem.setMode("none");
@@ -1356,7 +1357,7 @@
         start: "top top",
         end: "+=300%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-7";
           if (particleSystem) {
@@ -1467,7 +1468,7 @@
         start: "top top",
         end: "+=500%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-8";
           if (particleSystem) particleSystem.setMode("sparkles");
@@ -1553,7 +1554,7 @@
         start: "top top",
         end: "+=400%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-9";
           if (particleSystem) particleSystem.setMode("stars");
@@ -1612,7 +1613,7 @@
         start: "top top",
         end: "+=250%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => (currentScene = "scene-10"),
         onEnterBack: () => (currentScene = "scene-10"),
       },
@@ -1667,7 +1668,7 @@
         start: "top top",
         end: "+=200%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => (currentScene = "scene-11"),
         onEnterBack: () => (currentScene = "scene-11"),
       },
@@ -1730,7 +1731,7 @@
         start: "top top",
         end: "+=300%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "scene-12";
           if (particleSystem) particleSystem.setMode("petals");
@@ -1774,7 +1775,7 @@
         start: "top top",
         end: "+=150%",
         pin: true,
-        scrub: isMobile ? 2.5 : 1,
+        scrub: 1,
         onEnter: () => {
           currentScene = "finale";
           if (particleSystem) particleSystem.setMode("none");
@@ -2010,4 +2011,5 @@
   gsap.set(".final-text", { opacity: 0 });
   gsap.set(".infinity", { opacity: 0 });
 })();
+
 
