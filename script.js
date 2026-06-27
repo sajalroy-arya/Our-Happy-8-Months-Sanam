@@ -1732,7 +1732,12 @@
       );
 
       // Dream text fades in
-      tl.to(dream, { opacity: 1, y: 0, duration: dreamSlice * 0.5, ease: "power2.out" }, startT + dreamSlice * 0.2);
+      tl.to(dream, { opacity: 1, y: 0, duration: dreamSlice * 0.4, ease: "power2.out" }, startT + dreamSlice * 0.2);
+      
+      // Fade out to prevent overlap (except for the last one)
+      if (i < dreams.length - 1) {
+        tl.to(dream, { opacity: 0, y: -10, duration: dreamSlice * 0.2, ease: "power2.in" }, startT + dreamSlice * 0.8);
+      }
     });
   }
 
@@ -1957,10 +1962,61 @@
     // Tap handler on heart
     touchHeartBtn.addEventListener("click", () => {
       if (finaleTriggered) return;
-      finaleTriggered = true;
+      
+      const clingyGame = document.getElementById("clingy-game");
+      const clingyBtn = document.getElementById("clingy-btn");
+      const clingyMsg = document.getElementById("clingy-msg");
+      
+      if (clingyGame && !clingyGame.dataset.played) {
+          clingyGame.dataset.played = "true";
+          clingyGame.style.display = "flex";
+          gsap.to(clingyGame, { opacity: 1, duration: 0.5 });
+          
+          let jumps = 0;
+          const messages = ["Nooooo!", "Stay a little longer pleaseee! 🥺", "Catch me if you can! 🏃💨"];
+          
+          const moveBtn = (e) => {
+              if (jumps < 3) {
+                  e.preventDefault();
+                  clingyMsg.innerText = messages[jumps];
+                  
+                  const maxX = window.innerWidth - clingyBtn.offsetWidth - 40;
+                  const maxY = window.innerHeight - clingyBtn.offsetHeight - 40;
+                  // Calculate random x, y bounded by viewport
+                  const newX = (Math.random() - 0.5) * maxX;
+                  const newY = (Math.random() - 0.5) * maxY;
+                  
+                  clingyBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+                  jumps++;
+              } else {
+                  clingyBtn.removeEventListener("mouseover", moveBtn);
+                  clingyBtn.removeEventListener("touchstart", moveBtn);
+                  clingyMsg.innerText = "Okay fine... I'll let you go. ❤️";
+                  clingyBtn.innerText = "See the end";
+              }
+          };
+          
+          clingyBtn.addEventListener("mouseover", moveBtn);
+          clingyBtn.addEventListener("touchstart", moveBtn, {passive: false});
+          
+          clingyBtn.addEventListener("click", () => {
+              if (jumps >= 3) {
+                  gsap.to(clingyGame, { opacity: 0, duration: 0.5, onComplete: () => {
+                      clingyGame.style.display = "none";
+                      runFinaleEffect();
+                  }});
+              }
+          });
+          return;
+      }
+      
+      runFinaleEffect();
+      
+      function runFinaleEffect() {
+          finaleTriggered = true;
 
-      // 1. Big pulse on heart
-      gsap.to(glowHeart, {
+          // 1. Big pulse on heart
+          gsap.to(glowHeart, {
         scale: 1.3,
         duration: 0.3,
         ease: "power2.out",
@@ -2088,6 +2144,7 @@
         gsap.to(mainCanvas, { opacity: 0, duration: 1 });
         animationRunning = false;
       }, 500);
+      } // end runFinaleEffect
     });
   }
 

@@ -888,6 +888,10 @@ body {
 }
 
 .constellation-title {
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  text-align: center;
   color: var(--champagne);
   text-shadow: 0 0 20px rgba(201, 169, 110, 0.2);
 }
