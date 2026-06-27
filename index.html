@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="A love story written in light and code — for Maneef">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta property="og:title" content="For You — Always">
+    <meta property="og:description" content="A love story written in light and code">
+    <meta property="og:type" content="website">
+    <title>For You — Always</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============ INTRO OVERLAY ============ -->
+    <div id="intro-overlay">
+        <div class="intro-stars"></div>
+        <p class="intro-text">Tap anywhere to begin our story</p>
+    </div>
+
+    <!-- ============ AUDIO TOGGLE ============ -->
+    <button id="mute-btn" aria-label="Toggle sound">
+        <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path d="M19.07 4.93a10 10 0 010 14.14"/>
+            <path d="M15.54 8.46a5 5 0 010 7.07"/>
+        </svg>
+        <svg class="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+    </button>
+
+    <!-- ============ SCROLL PROGRESS ============ -->
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- ============ PARTICLE CANVAS ============ -->
+    <canvas id="main-canvas"></canvas>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 1 — Stars & Destiny                                -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-1">
+        <div class="scene-content">
+            <p class="destiny-line line-1">Some people call it coincidence...</p>
+            <p class="destiny-line line-2">I call it destiny.</p>
+            <div class="scroll-indicator">
+                <span class="scroll-text">Scroll gently</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 2 — Anime Sky & Anniversary                        -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-2">
+        <div class="sky-layer"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="scene-content">
+            <h1 class="anniversary-text">Happy 8 Months</h1>
+            <p class="anniversary-sub">Sajal &amp; Maneef</p>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 3 — The First Meeting (Chat Recreation)            -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-3">
+        <div class="scene-content">
+            <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="phone-header">Sajal &#10084;</div>
+                <div class="chat-area">
+                    <div class="msg received">Listen to something...</div>
+                    <div class="msg received">&#127925; Ho Gaya Hai Tujhko To Pyar Sajna</div>
+                    <div class="msg sent">Nahi nahi itni jaldi kaha &#128514;</div>
+                    <div class="chat-timestamp">A few hours later that night...</div>
+                    <div class="msg sent">Okay maybe I was wrong...</div>
+                    <div class="msg received">So... us? &#10084;&#65039;</div>
+                    <div class="msg sent">Us. &#128149;</div>
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <p class="chat-date">October 28 — The night everything began</p>
+            </div>
+        </div>
+        <div class="color-wash"></div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 4 — Memory Lane                                    -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-4">
+        <div class="scene-content">
+            <p class="section-title">Moments I Hold Close</p>
+            <div class="memory-frame" data-index="0">
+                <div class="frame-image img-sunset"></div>
+                <p class="frame-caption">The first time everything changed</p>
+            </div>
+            <div class="memory-frame" data-index="1">
+                <div class="frame-image img-night"></div>
+                <p class="frame-caption">Nights that felt like minutes</p>
+            </div>
+            <div class="memory-frame" data-index="2">
+                <div class="frame-image img-blossom"></div>
+                <p class="frame-caption">Walking through life, side by side</p>
+            </div>
+            <div class="memory-frame" data-index="3">
+                <div class="frame-image img-rain"></div>
+                <p class="frame-caption">Through every storm, you stayed</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 5 — Butterfly Garden                               -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-5">
+        <div class="scene-content">
+            <p class="garden-text text-1">You gave me butterflies...</p>
+            <p class="garden-text text-2">...and they never left</p>
+        </div>
+        <div class="garden-ground"></div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 6 — Bollywood Montage                              -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-6">
+        <div class="scene-content">
+            <div class="montage-item" data-index="0">
+                <span class="montage-text">The first "good morning" that became a daily ritual</span>
+            </div>
+            <div class="montage-item" data-index="1">
+                <span class="montage-text">Random 2 AM calls about absolutely nothing</span>
+            </div>
+            <div class="montage-item" data-index="2">
+                <span class="montage-text">The cute fights that always ended in laughter</span>
+            </div>
+            <div class="montage-item" data-index="3">
+                <span class="montage-text">Blocking and unblocking each other</span>
+                <span class="montage-sub">...because emotions are spectacularly inconvenient</span>
+            </div>
+            <div class="montage-item" data-index="4">
+                <span class="montage-text">baccha... Snow... Pyaru...</span>
+                <span class="montage-sub">names only we understand</span>
+            </div>
+            <div class="montage-item" data-index="5">
+                <span class="montage-text">Laughing over the most completely stupid things</span>
+            </div>
+            <div class="montage-item" data-index="6">
+                <span class="montage-text">"Ho Gaya Hai Tujhko To Pyar Sajna..."</span>
+                <span class="montage-sub">"Nahi nahi itni jaldi kaha" — and hours later, us</span>
+            </div>
+            <div class="montage-item" data-index="7">
+                <span class="montage-text">The moment I realized you weren't just another person</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE — What If We Never Met?                             -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-whatif">
+        <div class="scene-content">
+            <p class="whatif-line line-1">Sometimes I wonder...</p>
+            <p class="whatif-line line-2">What if we never met?</p>
+        </div>
+        <div class="whatif-light"></div>
+        <div class="whatif-bloom">
+            <p class="whatif-resolve">I'm really glad that wasn't our story.</p>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 7 — Crystal Heart                                  -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-7">
+        <div class="scene-content">
+            <div class="crystal-heart-wrap">
+                <svg id="crystal-heart" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="heart-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#E8835C"/>
+                            <stop offset="50%" stop-color="#F4C2C2"/>
+                            <stop offset="100%" stop-color="#B8A9C9"/>
+                        </linearGradient>
+                        <clipPath id="heart-clip">
+                            <rect id="heart-fill-rect" x="0" y="180" width="200" height="180"/>
+                        </clipPath>
+                    </defs>
+                    <path class="heart-outline" d="M100 170C35 120 0 75 10 45 20 15 45 5 100 45 155 5 180 15 190 45 200 75 165 120 100 170Z" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                    <path class="heart-filled" d="M100 170C35 120 0 75 10 45 20 15 45 5 100 45 155 5 180 15 190 45 200 75 165 120 100 170Z" fill="url(#heart-grad)" clip-path="url(#heart-clip)"/>
+                </svg>
+                <p class="heart-progress-text">0%</p>
+            </div>
+            <p class="heart-reveal-text">Every heartbeat still chooses you.</p>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 8 — Floating Islands / Reasons I Love You          -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-8">
+        <div class="scene-content">
+            <p class="section-title reasons-title">Reasons I Love You</p>
+            <div class="island" data-index="0">
+                <p class="island-text">The way you light up when you laugh</p>
+            </div>
+            <div class="island" data-index="1">
+                <p class="island-text">How you make ordinary moments feel extraordinary</p>
+            </div>
+            <div class="island" data-index="2">
+                <p class="island-text">Your strength when the world feels heavy</p>
+            </div>
+            <div class="island" data-index="3">
+                <p class="island-text">The way you see beauty in everything</p>
+            </div>
+            <div class="island" data-index="4">
+                <p class="island-text">How you love without keeping score</p>
+            </div>
+            <div class="island" data-index="5">
+                <p class="island-text">Your voice — my favorite sound in the universe</p>
+            </div>
+            <div class="island" data-index="6">
+                <p class="island-text">The way you make me want to be better</p>
+            </div>
+            <div class="island" data-index="7">
+                <p class="island-text">Because you're you — and that's everything</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 9 — Constellations / Our Future                    -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-9">
+        <div class="scene-content">
+            <p class="section-title constellation-title">Our Future, Written in Stars</p>
+            <div class="dream" data-index="0">Travelling the world together</div>
+            <div class="dream" data-index="1">Building our little home</div>
+            <div class="dream" data-index="2">Midnight food adventures</div>
+            <div class="dream" data-index="3">Growing old, still laughing</div>
+            <div class="dream" data-index="4">Celebrating every birthday — the day my destiny was born</div>
+            <div class="dream" data-index="5">Holding your hand forever</div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 10 — Promise / Notebook                            -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-10">
+        <div class="scene-content">
+            <div class="notebook">
+                <div class="notebook-spine"></div>
+                <div class="notebook-page">
+                    <p class="promise-title">My Promise to You</p>
+                    <p class="promise-line">I promise to love you on the days it's easy,</p>
+                    <p class="promise-line">and even more on the days it's not.</p>
+                    <p class="promise-line">To be your safe place, your biggest fan,</p>
+                    <p class="promise-line">your partner in every adventure.</p>
+                    <p class="promise-line">To choose you — every morning,</p>
+                    <p class="promise-line">every night, every moment in between.</p>
+                    <p class="promise-line">To build a life with you that makes</p>
+                    <p class="promise-line">the rest of the world feel like background noise.</p>
+                    <p class="promise-line signature">— Sajal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 11 — Love Letter                                   -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-11">
+        <div class="scene-content">
+            <div class="envelope-wrapper">
+                <div class="envelope" id="envelope-tap">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-body">
+                        <span class="envelope-heart">&#9829;</span>
+                    </div>
+                </div>
+                <p class="tap-envelope">Tap to open</p>
+            </div>
+            <div class="letter-container" id="letter-container">
+                <div class="letter">
+                    <p class="letter-date">June 27, 2026</p>
+                    <p class="letter-salutation">My Dearest Maneef,</p>
+                    <p class="letter-body">Eight months. It started with a song — "Ho Gaya Hai Tujhko To Pyar Sajna" — and your adorable "Nahi nahi itni jaldi kaha." And then, just a few hours later on that October night, you changed my entire world.</p>
+                    <p class="letter-body">Before you, love was a word I understood in theory. Then you came along, and I realized everything I thought I knew was only scratching the surface.</p>
+                    <p class="letter-body">You taught me that love isn't just the grand gestures. It's the way you say my name. The way you laugh when I'm trying to be serious. The way you hold on a little tighter when you're about to fall asleep.</p>
+                    <p class="letter-body">It's the random midnight conversations, the comfortable silences, the inside jokes that would make absolutely no sense to anyone else in the world.</p>
+                    <p class="letter-body">Every day with you feels like discovering a new color I never knew existed. You've painted my world in shades I didn't know were possible.</p>
+                    <p class="letter-body">The universe made its best decision the day you were born. And its second best? Leading me to you.</p>
+                    <p class="letter-body">Thank you for eight extraordinary months. Thank you for choosing me. Thank you for being you — the most beautiful chapter of my life.</p>
+                    <p class="letter-body">This is just the beginning.</p>
+                    <p class="letter-closing">With all my heart, now and always,</p>
+                    <p class="letter-signature">Sajal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SCENE 12 — Sunrise Ending                                -->
+    <!-- ======================================================== -->
+    <section class="scene" id="scene-12">
+        <div class="sunrise-gradient"></div>
+        <div class="birds-container">
+            <div class="bird" style="--d:0s;--dur:15s;--t:20%"></div>
+            <div class="bird" style="--d:3s;--dur:18s;--t:35%"></div>
+            <div class="bird" style="--d:6s;--dur:12s;--t:15%"></div>
+            <div class="bird" style="--d:9s;--dur:20s;--t:40%"></div>
+            <div class="bird" style="--d:12s;--dur:16s;--t:25%"></div>
+        </div>
+        <div class="scene-content">
+            <p class="ending-line line-1">If the universe gave me another beginning...</p>
+            <p class="ending-line line-2">I'd still find my way back to you.</p>
+            <p class="ending-line line-3">Every single time.</p>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- FINALE — Touch Heart                                     -->
+    <!-- ======================================================== -->
+    <section class="scene" id="finale">
+        <div class="scene-content">
+            <div class="touch-heart-container" id="touch-heart-btn">
+                <div class="glow-heart">
+                    <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="glow-grad" cx="50%" cy="40%" r="50%">
+                                <stop offset="0%" stop-color="rgba(244,194,194,0.6)"/>
+                                <stop offset="100%" stop-color="rgba(232,131,92,0)"/>
+                            </radialGradient>
+                            <filter id="heart-blur">
+                                <feGaussianBlur stdDeviation="2"/>
+                            </filter>
+                        </defs>
+                        <ellipse cx="50" cy="42" rx="42" ry="38" fill="url(#glow-grad)" filter="url(#heart-blur)"/>
+                        <path d="M50 82C20 58 2 38 7 22 12 6 27 2 50 22 73 2 88 6 93 22 98 38 80 58 50 82Z" fill="#F4C2C2"/>
+                    </svg>
+                </div>
+                <p class="touch-text">Touch me.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FINAL SCREEN ============ -->
+    <div id="final-screen">
+        <canvas id="finale-canvas"></canvas>
+        <div class="final-content">
+            <p class="final-text">Happy 8 Months, Maneef.</p>
+            <p class="infinity">&#8734;</p>
+        </div>
+    </div>
+
+    <!-- ============ SCRIPTS ============ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

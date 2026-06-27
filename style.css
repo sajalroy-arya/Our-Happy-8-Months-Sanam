@@ -1,0 +1,1713 @@
+/* ================================================================
+   FOR YOU — ALWAYS
+   Complete Cinematic Experience Stylesheet
+   Design Language: Luxury Minimalism × Anime Dreamcore
+   ================================================================ */
+
+/* ──────────── CUSTOM PROPERTIES ──────────── */
+:root {
+  --cream: #FFF8F0;
+  --champagne: #C9A96E;
+  --lavender: #B8A9C9;
+  --soft-pink: #F4C2C2;
+  --peach: #FFDAB9;
+  --twilight: #1B2838;
+  --sunset: #E8835C;
+  --silver: #C0C0C0;
+  --deep-black: #0a0a0f;
+  --warm-white: #F5E6D3;
+
+  /* Derived / utility */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(12px);
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ──────────── BASE / RESET ──────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-size: 16px;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--deep-black);
+  color: var(--cream);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(201, 169, 110, 0.3);
+  color: var(--cream);
+}
+
+
+/* ──────────── INTRO OVERLAY ──────────── */
+#intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: var(--deep-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 1.2s var(--transition-smooth);
+}
+
+#intro-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(1px 1px at 15% 25%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 45% 60%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 70% 15%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 85% 75%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 30% 85%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 55% 35%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 10% 55%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 90% 45%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 62% 90%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 25% 10%, rgba(255, 255, 255, 0.45), transparent);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+.intro-text {
+  position: relative;
+  z-index: 2;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
+  opacity: 0.7;
+  animation: fadeInUp 2s var(--transition-smooth) forwards,
+             pulse-text 3s ease-in-out 2s infinite;
+}
+
+
+/* ──────────── MUTE BUTTON ──────────── */
+#mute-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--cream);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.5s ease, background 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+#mute-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.05);
+}
+
+#mute-btn:active {
+  transform: scale(0.95);
+}
+
+#mute-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+#mute-btn .icon-sound-off {
+  display: none;
+}
+
+#mute-btn.muted .icon-sound-on {
+  display: none;
+}
+
+#mute-btn.muted .icon-sound-off {
+  display: block;
+}
+
+
+/* ──────────── PROGRESS BAR ──────────── */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+#progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--champagne), var(--sunset), var(--champagne));
+  background-size: 200% 100%;
+  animation: shimmer-bar 3s linear infinite;
+  transition: width 0.15s linear;
+  border-radius: 0 1px 1px 0;
+  box-shadow: 0 0 8px rgba(201, 169, 110, 0.4);
+}
+
+
+/* ──────────── MAIN CANVAS (Three.js) ──────────── */
+#main-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 998;
+  pointer-events: none;
+}
+
+
+/* ──────────── GLOBAL SCENE STYLES ──────────── */
+.scene {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.scene-content {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  padding: 40px 20px;
+}
+
+
+/* ================================================================
+   SCENE 1 — Stars & Destiny
+   ================================================================ */
+#scene-1 {
+  background: var(--deep-black);
+}
+
+.destiny-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 5vw, 2.8rem);
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0;
+  text-align: center;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeInIndicator 2s ease forwards 3s;
+}
+
+.scroll-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--silver);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--silver), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes fadeInIndicator {
+  to { opacity: 0.6; }
+}
+
+@keyframes scrollPulse {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(10px); opacity: 0.2; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.destiny-line.line-2 {
+  margin-top: 12px;
+  font-style: italic;
+}
+
+
+/* ================================================================
+   SCENE 2 — Anime Sky & Anniversary
+   ================================================================ */
+#scene-2 {
+  background: linear-gradient(
+    180deg,
+    #1B2838 0%,
+    #2d3a5c 20%,
+    #5c4a6e 40%,
+    #a86a5a 60%,
+    #e8835c 78%,
+    #ffc87a 92%,
+    #ffe6b8 100%
+  );
+}
+
+.sky-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27, 40, 56, 0.8), transparent),
+    radial-gradient(ellipse 60% 40% at 70% 30%, rgba(184, 169, 201, 0.15), transparent),
+    radial-gradient(ellipse 90% 50% at 30% 70%, rgba(232, 131, 92, 0.2), transparent),
+    radial-gradient(ellipse 50% 35% at 80% 90%, rgba(255, 218, 185, 0.25), transparent);
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  filter: blur(20px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cloud-1 {
+  width: 350px;
+  height: 80px;
+  top: 20%;
+  left: -350px;
+  animation: cloud-drift-1 30s linear infinite;
+}
+
+.cloud-2 {
+  width: 250px;
+  height: 60px;
+  top: 35%;
+  left: -250px;
+  opacity: 0.8;
+  animation: cloud-drift-2 45s linear infinite;
+}
+
+.cloud-3 {
+  width: 400px;
+  height: 100px;
+  top: 50%;
+  left: -400px;
+  opacity: 0.6;
+  animation: cloud-drift-3 35s linear infinite;
+}
+
+.anniversary-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 300;
+  color: var(--champagne);
+  letter-spacing: 0.1em;
+  text-align: center;
+  opacity: 0;
+  text-shadow:
+    0 0 40px rgba(201, 169, 110, 0.3),
+    0 0 80px rgba(201, 169, 110, 0.1);
+  line-height: 1.2;
+}
+
+.anniversary-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+  font-weight: 300;
+  color: var(--silver);
+  letter-spacing: 0.2em;
+  text-align: center;
+  opacity: 0;
+  margin-top: 16px;
+  text-transform: uppercase;
+}
+
+
+/* ================================================================
+   SCENE 3 — The First Meeting (Chat Recreation)
+   ================================================================ */
+#scene-3 {
+  background: linear-gradient(180deg, var(--deep-black) 0%, #12121f 50%, #1a1520 100%);
+}
+
+.phone-frame {
+  width: 85vw;
+  max-width: 360px;
+  background: rgba(20, 20, 30, 0.8);
+  border-radius: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  padding: 20px 16px 24px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(184, 169, 201, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.phone-notch {
+  width: 120px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 18px 18px;
+  margin: -20px auto 16px;
+  position: relative;
+}
+
+.phone-notch::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  top: 8px;
+  right: 30px;
+}
+
+.phone-header {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cream);
+  text-align: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.msg {
+  max-width: 75%;
+  padding: 10px 16px;
+  border-radius: 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.msg.received {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cream);
+  border-bottom-left-radius: 4px;
+}
+
+.msg.sent {
+  align-self: flex-end;
+  background: rgba(184, 169, 201, 0.2);
+  color: var(--cream);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-timestamp {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--silver);
+  opacity: 0.5;
+  font-style: italic;
+  margin: 8px 0;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  border-bottom-left-radius: 4px;
+  opacity: 0;
+}
+
+.typing-indicator span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--silver);
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.chat-date {
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.95rem, 3vw, 1.15rem);
+  color: var(--champagne);
+  opacity: 0;
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+}
+
+.color-wash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(20, 20, 30, 0.6), rgba(10, 10, 15, 0.8));
+  pointer-events: none;
+  z-index: 3;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+
+/* ================================================================
+   SCENE 4 — Memory Lane
+   ================================================================ */
+#scene-4 {
+  background: linear-gradient(180deg, var(--deep-black), #15121a 50%, #1a1520 100%);
+  min-height: 120vh;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  font-weight: 400;
+  color: var(--champagne);
+  opacity: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.memory-frame {
+  position: absolute;
+  width: clamp(140px, 35vw, 200px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px;
+  opacity: 0;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(201, 169, 110, 0.04);
+  transition: transform 0.6s var(--transition-smooth);
+}
+
+.memory-frame:nth-child(2) { transform: rotate(-3deg); }
+.memory-frame:nth-child(3) { transform: rotate(2deg); }
+.memory-frame:nth-child(4) { transform: rotate(-1deg); }
+.memory-frame:nth-child(5) { transform: rotate(4deg); }
+
+.frame-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background-size: cover;
+}
+
+.img-sunset {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFA07A 50%, #FFD700 100%);
+}
+
+.img-night {
+  background: linear-gradient(135deg, #1a1a4e 0%, #4a3f8a 50%, #7B68EE 100%);
+}
+
+.img-blossom {
+  background: linear-gradient(135deg, #FFB7C5 0%, #FF69B4 50%, #DDA0DD 100%);
+}
+
+.img-rain {
+  background: linear-gradient(135deg, #4682B4 0%, #5F9EA0 50%, #87CEEB 100%);
+}
+
+.frame-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--cream);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.3;
+  opacity: 0.85;
+}
+
+
+/* ================================================================
+   SCENE 5 — Butterfly Garden
+   ================================================================ */
+#scene-5 {
+  background: linear-gradient(180deg, #0e1210 0%, #14201a 40%, #1e2820 70%, #1a2518 100%);
+}
+
+.garden-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 500px;
+  padding: 0 20px;
+}
+
+.garden-text.text-2 {
+  margin-top: 8px;
+  color: var(--soft-pink);
+}
+
+.garden-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(20, 40, 25, 0.4) 30%,
+    rgba(15, 35, 20, 0.6) 60%,
+    rgba(10, 28, 15, 0.8) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.garden-ground::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 169, 110, 0.15),
+    transparent
+  );
+}
+
+
+/* ================================================================
+   SCENE 6 — Bollywood Montage
+   ================================================================ */
+#scene-6 {
+  background: var(--deep-black);
+  min-height: 150vh;
+}
+
+.montage-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  padding: 40px 24px;
+}
+
+.montage-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 5vw, 2.2rem);
+  font-weight: 300;
+  color: var(--cream);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.montage-sub {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  font-weight: 300;
+  color: var(--silver);
+  opacity: 0.7;
+  margin-top: 8px;
+  text-align: center;
+  font-style: italic;
+}
+
+
+/* ================================================================
+   SCENE WHATIF — What If We Never Met?
+   ================================================================ */
+#scene-whatif {
+  background: #1a1a1a;
+}
+
+.whatif-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 5vw, 2.2rem);
+  font-weight: 300;
+  color: #888;
+  opacity: 0;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 500px;
+  padding: 0 20px;
+}
+
+.whatif-line.line-2 {
+  margin-top: 10px;
+}
+
+.whatif-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    transparent 50%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.whatif-bloom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  z-index: 6;
+  pointer-events: none;
+  padding: 40px 20px;
+}
+
+.whatif-resolve {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 5vw, 2.2rem);
+  font-weight: 400;
+  color: var(--champagne);
+  opacity: 0;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 500px;
+  text-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+}
+
+
+/* ================================================================
+   SCENE 7 — Crystal Heart
+   ================================================================ */
+#scene-7 {
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(184, 169, 201, 0.06), transparent),
+    var(--deep-black);
+}
+
+.crystal-heart-wrap {
+  width: clamp(180px, 50vw, 280px);
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#crystal-heart {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(244, 194, 194, 0.15));
+}
+
+.heart-outline {
+  transition: stroke 1s ease;
+}
+
+.heart-progress-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--silver);
+  text-align: center;
+  opacity: 0.5;
+  margin-top: 12px;
+  letter-spacing: 0.1em;
+}
+
+.heart-reveal-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0;
+  text-align: center;
+  margin-top: 40px;
+  line-height: 1.5;
+  max-width: 500px;
+  padding: 0 20px;
+}
+
+
+/* ================================================================
+   SCENE 8 — Floating Islands / Reasons I Love You
+   ================================================================ */
+#scene-8 {
+  background: linear-gradient(180deg, #0e0e18 0%, #151525 50%, #1a1a2e 100%);
+  min-height: 120vh;
+}
+
+.reasons-title {
+  margin-bottom: 24px;
+}
+
+.island {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px 20px;
+  opacity: 0;
+  width: clamp(160px, 40vw, 220px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(184, 169, 201, 0.04);
+  transition: transform 0.4s var(--transition-smooth);
+}
+
+.island:nth-child(odd) {
+  animation: float 6s ease-in-out infinite;
+}
+
+.island:nth-child(even) {
+  animation: float 6s ease-in-out 3s infinite;
+}
+
+.island:nth-child(3n) {
+  animation-duration: 7s;
+  animation-delay: 1.5s;
+}
+
+.island-text {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+  color: var(--cream);
+  text-align: center;
+  line-height: 1.5;
+}
+
+
+/* ================================================================
+   SCENE 9 — Constellations / Our Future
+   ================================================================ */
+#scene-9 {
+  background: linear-gradient(180deg, #0a0a14 0%, #0f0f1e 50%, #141428 100%);
+  min-height: 120vh;
+}
+
+.constellation-title {
+  color: var(--champagne);
+  text-shadow: 0 0 20px rgba(201, 169, 110, 0.2);
+}
+
+.dream {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  padding: 8px 16px;
+  max-width: 250px;
+  line-height: 1.5;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+
+/* ================================================================
+   SCENE 10 — Promise / Notebook
+   ================================================================ */
+#scene-10 {
+  background: linear-gradient(180deg, #14121a 0%, #1a1820 50%, #1e1a22 100%);
+}
+
+.notebook {
+  width: clamp(280px, 80vw, 400px);
+  background: var(--warm-white);
+  border-radius: 4px;
+  padding: 30px 24px 30px 36px;
+  position: relative;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    4px 4px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Paper texture — faint ruled lines */
+.notebook::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    rgba(173, 216, 230, 0.2) 27px,
+    rgba(173, 216, 230, 0.2) 28px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.notebook-page {
+  position: relative;
+  z-index: 2;
+}
+
+.notebook-spine {
+  position: absolute;
+  left: 24px;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--champagne);
+  opacity: 0.4;
+  z-index: 3;
+}
+
+.promise-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: var(--twilight);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.promise-line {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  color: #3a3a3a;
+  opacity: 0;
+  line-height: 1.8;
+  position: relative;
+  z-index: 2;
+}
+
+.promise-line.signature {
+  margin-top: 20px;
+  color: var(--champagne);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+}
+
+
+/* ================================================================
+   SCENE 11 — Love Letter
+   ================================================================ */
+#scene-11 {
+  background: #1a1520;
+}
+
+.envelope-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.envelope {
+  width: clamp(240px, 70vw, 320px);
+  aspect-ratio: 16 / 10;
+  position: relative;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.envelope-body {
+  background: #D4A574;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 6px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 -4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #C4955A;
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  transform-origin: top center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.envelope-heart {
+  font-size: 2rem;
+  color: var(--soft-pink);
+  filter: drop-shadow(0 0 6px rgba(244, 194, 194, 0.3));
+  transition: transform 0.4s ease;
+}
+
+.envelope:hover .envelope-heart {
+  transform: scale(1.1);
+}
+
+.tap-envelope {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--silver);
+  opacity: 0.6;
+  letter-spacing: 0.1em;
+  animation: pulse-text 2.5s ease-in-out infinite;
+}
+
+/* Letter Container */
+.letter-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow-y: auto;
+  padding: 40px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.letter-container.visible {
+  display: block;
+}
+
+.letter {
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--warm-white);
+  padding: 40px 28px;
+  border-radius: 4px;
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Paper texture for letter */
+.letter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    rgba(173, 216, 230, 0.12) 27px,
+    rgba(173, 216, 230, 0.12) 28px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.letter > * {
+  position: relative;
+  z-index: 1;
+}
+
+.letter-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--silver);
+  text-align: right;
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.letter-salutation {
+  font-family: 'Caveat', cursive;
+  font-size: 1.4rem;
+  color: var(--twilight);
+  margin: 16px 0;
+  font-weight: 600;
+}
+
+.letter-body {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 3.5vw, 1.15rem);
+  color: #3a3a3a;
+  line-height: 1.9;
+  margin-bottom: 16px;
+  opacity: 0;
+}
+
+.letter-closing {
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 24px;
+  opacity: 0;
+}
+
+.letter-signature {
+  font-family: 'Caveat', cursive;
+  font-size: 1.4rem;
+  color: var(--champagne);
+  font-weight: 700;
+  margin-top: 8px;
+  opacity: 0;
+}
+
+
+/* ================================================================
+   SCENE 12 — Sunrise Ending
+   ================================================================ */
+#scene-12 {
+  background: var(--deep-black);
+}
+
+.sunrise-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    #1B2838 0%,
+    #2d3a5c 25%,
+    #5c4a6e 45%,
+    #c47a5a 65%,
+    #e8a060 80%,
+    #f5c882 90%,
+    #ffe6b8 100%
+  );
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.birds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.bird {
+  position: absolute;
+  top: var(--t, 20%);
+  width: 20px;
+  height: 10px;
+  animation: fly var(--dur, 15s) linear var(--d, 0s) infinite;
+}
+
+.bird::before,
+.bird::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 2px;
+  background: #2a1a10;
+  border-radius: 2px;
+}
+
+.bird::before {
+  left: 0;
+  transform-origin: right center;
+  transform: rotate(-25deg);
+}
+
+.bird::after {
+  right: 0;
+  transform-origin: left center;
+  transform: rotate(25deg);
+}
+
+.ending-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 5vw, 2.2rem);
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 500px;
+  padding: 0 20px;
+}
+
+.ending-line.line-2 {
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.ending-line.line-3 {
+  margin-top: 12px;
+  color: var(--champagne);
+  font-weight: 400;
+}
+
+
+/* ================================================================
+   FINALE — Touch Heart
+   ================================================================ */
+#finale {
+  background: var(--deep-black);
+}
+
+.touch-heart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  padding: 20px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glow-heart {
+  width: clamp(80px, 25vw, 120px);
+  animation: pulse-glow 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(244, 194, 194, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.touch-heart-container:hover .glow-heart {
+  filter: drop-shadow(0 0 30px rgba(244, 194, 194, 0.5));
+}
+
+.glow-heart svg {
+  width: 100%;
+  height: auto;
+}
+
+.touch-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--silver);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  animation: pulse-text 3s ease-in-out infinite;
+}
+
+
+/* ================================================================
+   FINAL SCREEN
+   ================================================================ */
+#final-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: white;
+  display: none;
+  opacity: 0;
+}
+
+#final-screen.visible {
+  display: block;
+}
+
+#finale-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.final-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.final-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 300;
+  color: var(--twilight);
+  letter-spacing: 0.05em;
+  text-align: center;
+  opacity: 0;
+  line-height: 1.4;
+}
+
+.infinity {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 8vw, 4rem);
+  color: var(--champagne);
+  margin-top: 20px;
+  opacity: 0;
+  text-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+}
+
+
+/* ================================================================
+   KEYFRAME ANIMATIONS
+   ================================================================ */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes cloud-drift-1 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 350px));
+  }
+}
+
+@keyframes cloud-drift-2 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 250px));
+  }
+}
+
+@keyframes cloud-drift-3 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 400px));
+  }
+}
+
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(244, 194, 194, 0.3));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 35px rgba(244, 194, 194, 0.5))
+            drop-shadow(0 0 60px rgba(232, 131, 92, 0.2));
+  }
+}
+
+@keyframes pulse-text {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translateX(-50px) translateY(0);
+  }
+  25% {
+    transform: translateX(calc(25vw)) translateY(-8px);
+  }
+  50% {
+    transform: translateX(calc(50vw)) translateY(4px);
+  }
+  75% {
+    transform: translateX(calc(75vw)) translateY(-6px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 50px)) translateY(0);
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer-bar {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+/* ================================================================
+   RESPONSIVE — Tablet (768px+)
+   ================================================================ */
+@media (min-width: 768px) {
+
+  .destiny-line {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+  }
+
+  .anniversary-text {
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    letter-spacing: 0.12em;
+  }
+
+  .anniversary-sub {
+    font-size: 1.15rem;
+    margin-top: 20px;
+  }
+
+  .phone-frame {
+    max-width: 380px;
+    padding: 24px 20px 28px;
+    border-radius: 40px;
+  }
+
+  .msg {
+    font-size: 15px;
+    padding: 12px 18px;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    margin-bottom: 48px;
+  }
+
+  .memory-frame {
+    width: clamp(180px, 28vw, 240px);
+  }
+
+  .frame-caption {
+    font-size: 16px;
+  }
+
+  .garden-text {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+  }
+
+  .montage-text {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    max-width: 700px;
+  }
+
+  .montage-sub {
+    font-size: 1rem;
+  }
+
+  .whatif-line,
+  .whatif-resolve {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+  }
+
+  .island {
+    width: clamp(200px, 28vw, 260px);
+    padding: 28px 24px;
+  }
+
+  .island-text {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  }
+
+  .dream {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    max-width: 300px;
+  }
+
+  .notebook {
+    max-width: 450px;
+    padding: 40px 32px 40px 44px;
+  }
+
+  .promise-title {
+    font-size: 1.7rem;
+  }
+
+  .promise-line {
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+  }
+
+  .envelope {
+    width: clamp(280px, 50vw, 360px);
+  }
+
+  .letter {
+    max-width: 560px;
+    padding: 48px 36px;
+  }
+
+  .letter-salutation {
+    font-size: 1.6rem;
+  }
+
+  .letter-body {
+    font-size: 1.2rem;
+  }
+
+  .ending-line {
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+  }
+
+  .glow-heart {
+    width: clamp(100px, 20vw, 140px);
+  }
+
+  .final-text {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+  }
+
+  .infinity {
+    font-size: clamp(3.5rem, 7vw, 5rem);
+  }
+}
+
+
+/* ================================================================
+   RESPONSIVE — Desktop (1024px+)
+   ================================================================ */
+@media (min-width: 1024px) {
+
+  .scene-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .destiny-line {
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    max-width: 700px;
+  }
+
+  .anniversary-text {
+    font-size: clamp(4rem, 6vw, 6rem);
+  }
+
+  .phone-frame {
+    max-width: 390px;
+  }
+
+  .memory-frame {
+    width: clamp(200px, 22vw, 260px);
+  }
+
+  .montage-text {
+    max-width: 800px;
+  }
+
+  .notebook {
+    max-width: 480px;
+  }
+
+  .letter {
+    max-width: 600px;
+  }
+
+  .cloud-1 { width: 500px; height: 100px; }
+  .cloud-2 { width: 380px; height: 80px; }
+  .cloud-3 { width: 550px; height: 120px; }
+
+  .island {
+    width: clamp(220px, 22vw, 280px);
+  }
+
+  .glow-heart {
+    width: 140px;
+  }
+}
+
+
+/* ================================================================
+   ACCESSIBILITY — Reduced Motion
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cloud,
+  .bird,
+  .glow-heart,
+  .island,
+  .typing-indicator span,
+  .intro-stars,
+  .tap-envelope,
+  .touch-text,
+  .intro-text {
+    animation: none !important;
+  }
+
+  #progress-fill {
+    animation: none !important;
+    background: var(--champagne);
+  }
+}
+
+
+/* ================================================================
+   UTILITY CLASSES (for JS usage)
+   ================================================================ */
+.visible {
+  opacity: 1 !important;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+}
