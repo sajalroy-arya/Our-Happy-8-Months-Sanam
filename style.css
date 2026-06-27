@@ -1824,3 +1824,14 @@ body {
     display: none !important;
   }
 }
+
+.fire-text {
+  color: #ff5e00;
+  text-shadow: 0 0 10px #ff5e00, 0 0 20px #ff0000;
+  font-weight: 700;
+}
+.ice-text {
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00a2ff;
+  font-weight: 700;
+}

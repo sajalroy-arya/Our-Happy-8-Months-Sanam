@@ -2098,12 +2098,17 @@
           });
         }, 2000);
 
-        // 5. After 3s: Final text
+                // 5. After 3s: Final text
         setTimeout(() => {
           gsap.fromTo(
             finalText,
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+          );
+          gsap.fromTo(
+            document.querySelector(".surname"),
+            { opacity: 0, y: 15, x: -10 },
+            { opacity: 1, y: 0, x: 0, duration: 1.5, ease: "power2.out", delay: 1.2 }
           );
         }, 3000);
 
