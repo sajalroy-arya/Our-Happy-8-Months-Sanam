@@ -34,16 +34,20 @@
   // ================================================================
   // 1. LENIS SMOOTH SCROLL
   // ================================================================
-  const lenis = new Lenis({ 
+  let lenis = null;
+  if (!isMobile) {
+    lenis = new Lenis({ 
     lerp: 0.08, 
     smoothWheel: true,
     smoothTouch: true,
     touchMultiplier: 1.5 
   });
   lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-  lenis.stop(); // Don't scroll until intro is dismissed
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    if(lenis) lenis.stop();
+  }
+  
 
   // ================================================================
   // 2. AUDIO ENGINE
@@ -896,12 +900,86 @@
     setupScene11();
     setupScene12();
     setupFinale();
+
+  // ── MOBILE TAP-TO-ADVANCE SCENE MANAGER ──────────────────────────────
+  if (isMobile) {
+    const mobileNav = document.getElementById("mobile-nav");
+    const btnNext = document.getElementById("btn-next");
+    const btnPrev = document.getElementById("btn-prev");
+    let currentIndex = 0;
+
+    const durations = {
+      "#scene-1": 6, "#scene-2": 5, "#scene-3": 10, "#scene-4": 6,
+      "#scene-5": 5, "#scene-6": 8, "#scene-whatif": 10, "#scene-7": 6,
+      "#scene-8": 8, "#scene-9": 8, "#scene-10": 7, "#scene-11": 5,
+      "#scene-12": 6, "#finale": 4
+    };
+
+    function playMobileScene(index) {
+      // Hide all scenes
+      window.mobileTimelines.forEach((scene, i) => {
+        const el = document.querySelector(scene.id);
+        if (el) el.classList.remove("active");
+        if (i !== index) scene.tl.pause();
+      });
+
+      const current = window.mobileTimelines[index];
+      if (!current) return;
+
+      const el = document.querySelector(current.id);
+      if (el) el.classList.add("active");
+
+      if (current.onEnter) current.onEnter();
+
+      // Reset and play
+      current.tl.progress(0);
+      
+      // Calculate timeScale
+      const dur = current.tl.duration();
+      const targetSec = durations[current.id] || 5;
+      if (dur > 0) current.tl.timeScale(dur / targetSec);
+
+      current.tl.play();
+
+      // Hide next button, show prev button if not first scene
+      btnNext.classList.remove("visible");
+      if (index > 0) btnPrev.classList.add("visible");
+      else btnPrev.classList.remove("visible");
+
+      // Show next button when complete
+      current.tl.eventCallback("onComplete", () => {
+        if (index < window.mobileTimelines.length - 1) {
+          btnNext.classList.add("visible");
+        }
+      });
+    }
+
+    btnNext.addEventListener("click", () => {
+      if (currentIndex < window.mobileTimelines.length - 1) {
+        currentIndex++;
+        playMobileScene(currentIndex);
+      }
+    });
+
+    btnPrev.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        playMobileScene(currentIndex);
+      }
+    });
+
+    // Start first scene
+    setTimeout(() => {
+      mobileNav.style.display = "flex";
+      playMobileScene(0);
+    }, 1000);
   }
+}
+
 
   // ── SCENE 1: Stars & Destiny ──────────────────────────────────
   function setupScene1() {
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-1",
         start: "top top",
         end: isMobile ? "+=600%" : "+=300%",
@@ -915,8 +993,15 @@
           currentScene = "scene-1";
           if (particleSystem) particleSystem.setMode("stars");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Stars appear gradually (handled by particle system being in 'stars' mode)
     // At 20-30%: Shooting star
@@ -964,8 +1049,7 @@
 
   // ── SCENE 2: Anime Sky & Anniversary ──────────────────────────
   function setupScene2() {
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-2",
         start: "top top",
         end: isMobile ? "+=400%" : "+=200%",
@@ -979,8 +1063,15 @@
           currentScene = "scene-2";
           if (particleSystem) particleSystem.setMode("petals");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Cloud parallax
     tl.to("#scene-2 .cloud-1", { x: -60, duration: 1, ease: "none" }, 0);
@@ -1020,8 +1111,7 @@
     gsap.set(typingIndicator, { opacity: 0 });
     gsap.set(chatDate, { opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-3",
         start: "top top",
         end: isMobile ? "+=700%" : "+=350%",
@@ -1029,8 +1119,15 @@
         scrub: 1,
         onEnter: () => (currentScene = "scene-3"),
         onEnterBack: () => (currentScene = "scene-3"),
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Color wash fades out
     tl.fromTo(colorWash, { opacity: 1 }, { opacity: 0, duration: 1, ease: "none" }, 0);
@@ -1090,8 +1187,7 @@
 
     gsap.set(sectionTitle, { opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-4",
         start: "top top",
         end: isMobile ? "+=700%" : "+=350%",
@@ -1099,8 +1195,15 @@
         scrub: 1,
         onEnter: () => (currentScene = "scene-4"),
         onEnterBack: () => (currentScene = "scene-4"),
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Section title
     tl.to(sectionTitle, { opacity: 1, duration: 0.15, ease: "power2.out" }, 0);
@@ -1167,8 +1270,7 @@
     gsap.set([text1, text2], { opacity: 0, y: 30 });
     gsap.set(ground, { opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-5",
         start: "top top",
         end: isMobile ? "+=500%" : "+=250%",
@@ -1182,8 +1284,15 @@
           currentScene = "scene-5";
           if (particleSystem) particleSystem.setMode("butterflies");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     tl.to(ground, { opacity: 1, duration: 0.3, ease: "none" }, 0);
     tl.to(text1, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 0.2);
@@ -1201,8 +1310,7 @@
       if (sub) gsap.set(sub, { opacity: 0 });
     });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-6",
         start: "top top",
         end: isMobile ? "+=1000%" : "+=500%",
@@ -1216,8 +1324,15 @@
           currentScene = "scene-6";
           if (particleSystem) particleSystem.setMode("none");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     const itemCount = items.length;
     const sliceDuration = 1 / itemCount;
@@ -1292,8 +1407,7 @@
     gsap.set(bloom, { opacity: 0 });
     gsap.set(resolve, { opacity: 0, y: 15 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-whatif",
         start: "top top",
         end: isMobile ? "+=600%" : "+=300%",
@@ -1309,8 +1423,15 @@
           if (particleSystem) particleSystem.setMode("none");
           if (audioEngine) audioEngine.stopPiano();
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Line 1 fades in (muted)
     tl.to(line1, { opacity: 0.6, y: 0, duration: 0.2, ease: "power2.out" }, 0.1);
@@ -1352,8 +1473,7 @@
 
     gsap.set(heartRevealText, { opacity: 0, y: 20 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-7",
         start: "top top",
         end: isMobile ? "+=600%" : "+=300%",
@@ -1370,8 +1490,15 @@
           currentScene = "scene-7";
           if (particleSystem) particleSystem.setMode("stars");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Fill heart (y: 180 -> 0)
     tl.to(
@@ -1463,8 +1590,7 @@
 
     gsap.set(reasonsTitle, { opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-8",
         start: "top top",
         end: isMobile ? "+=1000%" : "+=500%",
@@ -1478,8 +1604,15 @@
           currentScene = "scene-8";
           if (particleSystem) particleSystem.setMode("sparkles");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Title
     tl.to(reasonsTitle, { opacity: 1, duration: 0.1, ease: "power2.out" }, 0);
@@ -1549,8 +1682,7 @@
     // Track group progress for constellation drawing
     const groupProgress = [0, 0, 0, 0, 0, 0];
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-9",
         start: "top top",
         end: isMobile ? "+=800%" : "+=400%",
@@ -1570,8 +1702,15 @@
             particleSystem.drawConstellations(mainCtx, groupProgress);
           }
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Title
     tl.to(constellationTitle, { opacity: 1, duration: 0.1, ease: "power2.out" }, 0);
@@ -1608,8 +1747,7 @@
     gsap.set(promiseTitle, { opacity: 0 });
     promiseLines.forEach((line) => gsap.set(line, { opacity: 0, y: 10 }));
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-10",
         start: "top top",
         end: isMobile ? "+=500%" : "+=250%",
@@ -1617,8 +1755,15 @@
         scrub: 1,
         onEnter: () => (currentScene = "scene-10"),
         onEnterBack: () => (currentScene = "scene-10"),
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Notebook slides up
     tl.to(notebook, { opacity: 1, y: 0, duration: 0.15, ease: "power2.out" }, 0.1);
@@ -1663,8 +1808,7 @@
     if (letterClosing) gsap.set(letterClosing, { opacity: 0 });
     if (letterSignature) gsap.set(letterSignature, { opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-11",
         start: "top top",
         end: isMobile ? "+=400%" : "+=200%",
@@ -1672,8 +1816,15 @@
         scrub: 1,
         onEnter: () => (currentScene = "scene-11"),
         onEnterBack: () => (currentScene = "scene-11"),
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Envelope floats in
     tl.to(envelopeWrapper, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.1);
@@ -1726,8 +1877,7 @@
     gsap.set(sunriseGradient, { opacity: 0 });
     gsap.set([line1, line2, line3], { opacity: 0, y: 20 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#scene-12",
         start: "top top",
         end: isMobile ? "+=600%" : "+=300%",
@@ -1741,8 +1891,15 @@
           currentScene = "scene-12";
           if (particleSystem) particleSystem.setMode("petals");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Sunrise gradient
     tl.to(sunriseGradient, { opacity: 1, duration: 0.4, ease: "none" }, 0);
@@ -1770,8 +1927,7 @@
 
     gsap.set(touchText, { opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    const stConfig = {
         trigger: "#finale",
         start: "top top",
         end: isMobile ? "+=300%" : "+=150%",
@@ -1785,8 +1941,15 @@
           currentScene = "finale";
           if (particleSystem) particleSystem.setMode("none");
         },
-      },
-    });
+      };
+    let tl;
+    if (isMobile) {
+      tl = gsap.timeline({ paused: true });
+      if (!window.mobileTimelines) window.mobileTimelines = [];
+      window.mobileTimelines.push({ id: stConfig.trigger, tl: tl, onEnter: stConfig.onEnter });
+    } else {
+      tl = gsap.timeline({ scrollTrigger: stConfig });
+    }
 
     // Touch text appears
     tl.to(touchText, { opacity: 1, duration: 0.2, ease: "power2.out" }, 0.4);
@@ -1918,7 +2081,7 @@
 
         // 9. Stop lenis
         setTimeout(() => {
-          lenis.stop();
+          if(lenis) lenis.stop();
         }, 3000);
 
         // Hide main canvas
@@ -1957,7 +2120,7 @@
     });
 
     // Start Lenis smooth scroll
-    lenis.start();
+    if(lenis) lenis.start();
 
     // Initialize particle system
     particleSystem = new ParticleSystem(mainCanvas, mainCtx);
