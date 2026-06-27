@@ -6,15 +6,15 @@
 (function () {
   "use strict";
 
+  // ── Global State ───────────────────────────────────────────────
+  const isMobile = window.innerWidth < 768;
+
   // ── Register GSAP Plugins ──────────────────────────────────────
   gsap.registerPlugin(ScrollTrigger, TextPlugin);
   ScrollTrigger.config({ ignoreMobileResize: true });
   if (isMobile) {
     ScrollTrigger.normalizeScroll(true);
   }
-
-  // ── Global State ───────────────────────────────────────────────
-  const isMobile = window.innerWidth < 768;
   let audioEngine = null;
   let particleSystem = null;
   let animationRunning = false;
